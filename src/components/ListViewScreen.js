@@ -10,7 +10,7 @@ import {
 // Declusterting
 import {ListCard, TextField} from './common';
 import { connect } from 'react-redux';
-import {imageSearchBoxValueChanged} from '../actions';
+import {imageSearchBoxValueChanged,getImageListFromAPI,toggleImageListLoader} from '../actions';
 import axios from 'axios';
 
 class ListViewScreen extends Component {
@@ -20,7 +20,8 @@ class ListViewScreen extends Component {
   };
 
   renderLoader() {
-    if (this.state.showLoader) {
+    // if (this.state.showLoader) {
+    if(this.props.showLoader){
       return (
         <ActivityIndicator
           size="large"
@@ -33,7 +34,7 @@ class ListViewScreen extends Component {
 
   getImageAPICall() {
     this.setState({
-      showLoader: true,
+      showLoader: false,
     });
     axios
       .get('https://picsum.photos/v2/list')
@@ -55,7 +56,11 @@ class ListViewScreen extends Component {
   }
 
   componentDidMount() {
-    this.getImageAPICall();
+    // this.getImageAPICall();
+    // this.props.toggleImageListLoader(true);
+    this.props.getImageListFromAPI();
+    // this.props.toggleImageListLoader(false);
+    // console.log(this.props);
   }
   render() {
     const {ViewStyle, HeaderViewStyle} = styles;
@@ -109,17 +114,22 @@ class ListViewScreen extends Component {
         <TextField
           placeholder="Search"
           onChangeText={value=>{
-            // console.log('Change: ',value);
-            this.props.imageSearchBoxValueChanged(value);
+            console.log('filtered image list : ',this.props.filtered_image_list);
+            // console.log('imagelist',this.props.image_list);
+            this.props.imageSearchBoxValueChanged(this.props.image_list_val,value);
+
           }}
           value = {this.props.image_search_value}
           style = {{width:'95%'}}
         />
         <FlatList
           // data = {Data}
-          data={this.state.imageList}
+          // data={this.state.imageList}
+          // data = {this.props.image_list_val}
+          data = {this.props.filtered_image_list}
           renderItem={item => {
-            // console.log(item,item.item,item.item.download_url);
+            // console.log('GEt item data:',this.props.filtered_image_list);
+            console.log(item,item.item,item.item.download_url);
             return (
               <ListCard
                 ownericon={item.item.download_url}
@@ -163,7 +173,10 @@ const mapStateToProps =state =>{
   // console.log('maptoprop',state.imageListing.image_search)
   return{
     image_search_value : state.imageListing.image_search,
+    image_list_val : state.imageListing.image_list,
+    showLoader : state.imageListing.showLoader,
+    filtered_image_list: state.imageListing.filtered_image_list,
   };
 };
 
-export default connect((mapStateToProps),{imageSearchBoxValueChanged})(ListViewScreen);
+export default connect((mapStateToProps),{imageSearchBoxValueChanged,getImageListFromAPI,toggleImageListLoader})(ListViewScreen);
