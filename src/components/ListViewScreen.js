@@ -63,7 +63,7 @@ class ListViewScreen extends Component {
   componentDidMount() {
     // this.getImageAPICall();
     // this.props.toggleImageListLoader(true);
-    this.props.getImageListFromAPI();
+    // this.props.getImageListFromAPI();
     // this.props.toggleImageListLoader(false);
     // console.log(this.props);
   }

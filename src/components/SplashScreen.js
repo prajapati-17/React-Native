@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
-
+import {connect} from 'react-redux';
+import { getImageListFromAPI } from '../actions';
 class SplashScreen extends Component {
   componentDidMount() {
-      setTimeout(()=>{
-        this.props.navigation.navigate('Tab Screens');
-      })
+    this.props.getImageListFromAPI(this.props.navigation);
+    //   setTimeout(()=>{
+    //     this.props.navigation.navigate('Tab Screens');
+    //   })
     // console.log('This.props param : ', this.props.route);
   }
 
@@ -19,4 +21,4 @@ class SplashScreen extends Component {
   }
 }
 
-export default SplashScreen;
+export default connect(null,{getImageListFromAPI})(SplashScreen);
