@@ -8,10 +8,13 @@ import ImageDetailsScreen from '../components/ImageDetailsScreen';
 import NextScreen from '../components/NextScreen';
 import TabScreen1 from '../components/TabScreen1';
 import TabScreen2 from '../components/TabScreen2';
+import SplashScreen from '../components/SplashScreen';
 
 const Tab1StackNav = createNativeStackNavigator();
 const Tab2StackNav = createNativeStackNavigator();
+const MainStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
 
 // function MainAppRoutes() {
 //   return (
@@ -71,16 +74,25 @@ function Tab2Stack(){
             <Tab2StackNav.Screen name='Tab Screen1' component={TabScreen1}/>
             <Tab2StackNav.Screen name='Tab Screen2' component={TabScreen2}/>
         </Tab2StackNav.Navigator>
-    )
+    );
+}
+
+function TabStack() {
+    return(
+        <Tab.Navigator screenOptions={{headerShown:false}}>
+                <Tab.Screen name="Image List" component={Tab1Stack}/>
+                <Tab.Screen name="Tab2" component={Tab2Stack}/>
+        </Tab.Navigator>
+    );
 }
 
 function MainAppRoutes(){
     return(
         <NavigationContainer>
-            <Tab.Navigator screenOptions={{headerShown:false}}>
-                <Tab.Screen name="Image List" component={Tab1Stack}/>
-                <Tab.Screen name="Tab2" component={Tab2Stack}/>
-            </Tab.Navigator>
+            <MainStack.Navigator screenOptions={{headerShown:false}}>
+                <MainStack.Screen name="Splash Screen" component={SplashScreen}/>
+                <MainStack.Screen name="Tab Screens" component={TabStack}/>
+            </MainStack.Navigator>
         </NavigationContainer>
     )
 }
