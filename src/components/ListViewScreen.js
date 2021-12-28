@@ -132,13 +132,13 @@ class ListViewScreen extends Component {
           value={this.props.image_search_value}
           style={{width: '95%'}}
         />
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             // console.log('Lets move ->', this.props);
             this.props.navigation.navigate('Image Details');
           }}>
           <Text>Get Image Details!</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <FlatList
           // data = {Data}
           // data={this.state.imageList}
