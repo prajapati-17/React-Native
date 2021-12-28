@@ -82,7 +82,7 @@ function TabStack() {
     return(
         <Tab.Navigator screenOptions={{headerShown:false}}>
                 <Tab.Screen name="Image List" component={Tab1Stack}/>
-                <Tab.Screen name="Tab2" component={Tab2Stack}/>
+                <Tab.Screen name="second Tab" component={Tab2Stack}/>
         </Tab.Navigator>
     );
 }

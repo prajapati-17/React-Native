@@ -9,7 +9,7 @@ class TabScreen2 extends Component {
   render() {
     return (
       <View>
-        <Text> TabScreen2 </Text>
+        {/* <Text> TabScreen2 </Text> */}
         <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
           <Text> Go Back!...</Text>
         </TouchableOpacity>
