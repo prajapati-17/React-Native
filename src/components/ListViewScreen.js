@@ -5,12 +5,17 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 
 // Declusterting
 import {ListCard, TextField} from './common';
-import { connect } from 'react-redux';
-import {imageSearchBoxValueChanged,getImageListFromAPI,toggleImageListLoader} from '../actions';
+import {connect} from 'react-redux';
+import {
+  imageSearchBoxValueChanged,
+  getImageListFromAPI,
+  toggleImageListLoader,
+} from '../actions';
 import axios from 'axios';
 
 class ListViewScreen extends Component {
@@ -21,7 +26,7 @@ class ListViewScreen extends Component {
 
   renderLoader() {
     // if (this.state.showLoader) {
-    if(this.props.showLoader){
+    if (this.props.showLoader) {
       return (
         <ActivityIndicator
           size="large"
@@ -99,7 +104,7 @@ class ListViewScreen extends Component {
     // this.getImageAPICall();
     return (
       <View style={ViewStyle}>
-        <View style={HeaderViewStyle}>
+        {/* <View style={HeaderViewStyle}>
           <Text
             style={{
               fontSize: 20,
@@ -108,34 +113,51 @@ class ListViewScreen extends Component {
             }}>
             Post Card
           </Text>
-        </View>
+        </View> */}
         {/* <ListCard ownericon={require('./birds.jpg')}   ownerid ="ankit" image={require('./postit.jpg')} post="3rd Post" /> */}
         {/* <ListCard/> */}
         <TextField
           placeholder="Search"
-          onChangeText={value=>{
-            console.log('filtered image list : ',this.props.filtered_image_list);
+          onChangeText={value => {
+            console.log(
+              'filtered image list : ',
+              this.props.filtered_image_list,
+            );
             // console.log('imagelist',this.props.image_list);
-            this.props.imageSearchBoxValueChanged(this.props.image_list_val,value);
-
+            this.props.imageSearchBoxValueChanged(
+              this.props.image_list_val,
+              value,
+            );
           }}
-          value = {this.props.image_search_value}
-          style = {{width:'95%'}}
+          value={this.props.image_search_value}
+          style={{width: '95%'}}
         />
+        <TouchableOpacity
+          onPress={() => {
+            // console.log('Lets move ->', this.props);
+            this.props.navigation.navigate('Image Details');
+          }}>
+          <Text>Get Image Details!</Text>
+        </TouchableOpacity>
         <FlatList
           // data = {Data}
           // data={this.state.imageList}
           // data = {this.props.image_list_val}
-          data = {this.props.filtered_image_list}
+          data={this.props.filtered_image_list}
           renderItem={item => {
             // console.log('GEt item data:',this.props.filtered_image_list);
-            console.log(item,item.item,item.item.download_url);
+            // console.log(item,item.item,item.item.download_url);
             return (
               <ListCard
                 ownericon={item.item.download_url}
                 ownerid={item.item.author}
                 image={item.item.download_url}
                 post={item.item.id}
+                detailsOnPress={()=>{
+                  this.props.navigation.navigate('Image Details',{
+                    image_id : item.item.id
+                  });
+                }}
               />
             );
           }}
@@ -167,16 +189,20 @@ const styles = StyleSheet.create({
   },
 });
 
-// connect 
+// connect
 
-const mapStateToProps =state =>{
+const mapStateToProps = state => {
   // console.log('maptoprop',state.imageListing.image_search)
-  return{
-    image_search_value : state.imageListing.image_search,
-    image_list_val : state.imageListing.image_list,
-    showLoader : state.imageListing.showLoader,
+  return {
+    image_search_value: state.imageListing.image_search,
+    image_list_val: state.imageListing.image_list,
+    showLoader: state.imageListing.showLoader,
     filtered_image_list: state.imageListing.filtered_image_list,
   };
 };
 
-export default connect((mapStateToProps),{imageSearchBoxValueChanged,getImageListFromAPI,toggleImageListLoader})(ListViewScreen);
+export default connect(mapStateToProps, {
+  imageSearchBoxValueChanged,
+  getImageListFromAPI,
+  toggleImageListLoader,
+})(ListViewScreen);

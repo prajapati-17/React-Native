@@ -11,7 +11,7 @@ class ListCard extends Component {
       ownericonStyle,
       buttonStyle,
     } = styles;
-    const {ownericon, ownerid, image, post} = this.props;
+    const {ownericon, ownerid, image, post,detailsOnPress} = this.props;
     return (
       <View>
         <View
@@ -36,12 +36,14 @@ class ListCard extends Component {
           </View>
           <TouchableOpacity
             style={buttonStyle}
-            onPress={() => {
-              Alert.alert('Download button is pressed !');
-              // console.log('Download button is pressed !');
-            }}>
+            // onPress={() => {
+            //   Alert.alert('Download button is pressed !');
+            //   // console.log('Download button is pressed !');
+            // }}
+            onPress={detailsOnPress}
+            >
             <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
-              Download
+              Image Details
             </Text>
           </TouchableOpacity>
         </View>
