@@ -9,6 +9,7 @@ import NextScreen from '../components/NextScreen';
 import TabScreen1 from '../components/TabScreen1';
 import TabScreen2 from '../components/TabScreen2';
 import SplashScreen from '../components/SplashScreen';
+import onBoarding from '../components/onBoarding';
 
 const Tab1StackNav = createNativeStackNavigator();
 const Tab2StackNav = createNativeStackNavigator();
@@ -91,6 +92,7 @@ function MainAppRoutes(){
         <NavigationContainer>
             <MainStack.Navigator screenOptions={{headerShown:false}}>
                 <MainStack.Screen name="Splash Screen" component={SplashScreen}/>
+                <MainStack.Screen name="onBoaring Screen" component={onBoarding}/>
                 <MainStack.Screen name="Tab Screens" component={TabStack}/>
             </MainStack.Navigator>
         </NavigationContainer>
